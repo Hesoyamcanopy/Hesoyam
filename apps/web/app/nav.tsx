@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import logo from "../public/logo.jpg";
 
+// Root relative rather than bare fragments, so the same nav works on /waitlist and
+// any other route that renders it. A bare "#how" on /waitlist scrolls nowhere.
 const LINKS = [
-  { href: "#how", label: "How it works" },
-  { href: "#cycle", label: "Grow cycle" },
-  { href: "#rails", label: "Economy" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/#how", label: "How it works" },
+  { href: "/#cycle", label: "Grow cycle" },
+  { href: "/#rails", label: "Economy" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 /**
@@ -47,7 +49,7 @@ export default function Nav() {
   return (
     <header className="nav" data-stuck={stuck}>
       <div className="nav-inner">
-        <a href="#top" className="brand" aria-label="HESOYAM CANOPY home">
+        <a href="/#top" className="brand" aria-label="HESOYAM CANOPY home">
           <BrandMark />
           <span className="brand-name">
             <b>Hesoyam</b>
@@ -66,6 +68,9 @@ export default function Nav() {
         <div className="nav-actions">
           <a className="quiet" href="/hesoyam-canopy-whitepaper.pdf" target="_blank" rel="noreferrer">
             Whitepaper
+          </a>
+          <a className="quiet" href="/waitlist">
+            Waitlist
           </a>
           <a className="btn btn-primary btn-sm" href="/app">
             Launch app
