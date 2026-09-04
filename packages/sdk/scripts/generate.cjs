@@ -33,6 +33,9 @@ const CONTRACT_FILES = {
   Dispensary: "market/Dispensary.sol",
   MockUSDC: "mocks/Mocks.sol",
   MockSwapAdapter: "mocks/Mocks.sol",
+  // Testnet only. Absent from a mainnet deployments file, so every reader of
+  // DEPLOYMENTS has to treat this address as optional already.
+  Faucet: "testnet/Faucet.sol",
 };
 
 /** Deployment record key for each contract, where one exists. */
@@ -51,6 +54,7 @@ const DEPLOYMENT_KEYS = {
   Marketplace: "marketplace",
   Dispensary: "dispensary",
   MockUSDC: "settlement",
+  Faucet: "faucet",
 };
 
 function lowerFirst(s) {

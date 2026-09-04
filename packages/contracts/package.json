@@ -18,7 +18,8 @@
     "beacon:setup": "hardhat run scripts/beacon-setup.js",
     "smoke": "hardhat run scripts/smoke.js --network localhost",
     "demo": "hardhat run scripts/demo.js --network localhost",
-    "warp": "hardhat run scripts/warp.js --network localhost"
+    "warp": "hardhat run scripts/warp.js --network localhost",
+    "faucet:deploy": "hardhat run scripts/faucet-deploy.js"
   },
   "keywords": [],
   "author": "",

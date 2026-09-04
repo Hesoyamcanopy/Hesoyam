@@ -16,6 +16,7 @@ import {
   marketplaceAbi,
   dispensaryAbi,
   mockUSDCAbi,
+  faucetAbi,
   DEPLOYMENTS,
   type ContractName,
 } from "@hesoyam/sdk";
@@ -35,6 +36,9 @@ export const ABIS = {
   Marketplace: marketplaceAbi,
   Dispensary: dispensaryAbi,
   MockUSDC: mockUSDCAbi,
+  // Testnet only. Absent from a mainnet deployments file, so contractFor
+  // returns undefined for it there rather than pointing at a live contract.
+  Faucet: faucetAbi,
 } as const;
 
 export type Addresses = Partial<Record<ContractName, `0x${string}`>>;

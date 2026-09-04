@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useReadContracts } from "wagmi";
 import { useAddresses, contractFor } from "../../lib/contracts";
 import { RequireWallet, useViewer } from "../../components/connect";
+import { Faucet } from "../../components/faucet";
 import { Panel, StatGrid, Stat, Empty, Row } from "../../components/ui";
 import { Hud, Meter } from "../../components/hud";
 import { hesoyam, money, units } from "../../lib/format";
@@ -69,6 +70,8 @@ function OverviewBody() {
 
   return (
     <>
+      <Faucet />
+
       <div className="panel hud-panel">
         <Hud cash={hesoyam(v(0))} stars={{ value: equipped, max: 5, label: "Strain cards equipped" }}>
           <Meter
