@@ -1,0 +1,179 @@
+name: CI
+
+# No job here needs write access to anything.
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Hardhat does not support Node 21 or later. Pin CI to the supported LTS so a
+  # local machine on a newer runtime cannot mask a real failure.
+  NODE_VERSION: "20"
+
+jobs:
+  contracts:
+    name: Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # Not `npm ci`. The lockfile is generated on Windows and npm prunes the
+      # optional platform binaries for other systems, so a strict install would
+      # leave a Linux runner without the native swc build.
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Verify OpenZeppelin is pinned
+        # Later versions emit MCOPY, which the paris EVM target cannot assemble.
+        # If this drifts, the build breaks in a confusing way, so fail loudly here.
+        run: |
+          VERSION=$(node -p "require('./node_modules/@openzeppelin/contracts/package.json').version")
+          echo "OpenZeppelin $VERSION"
+          test "$VERSION" = "5.0.2" || (echo "Expected 5.0.2, got $VERSION" && exit 1)
+
+      - name: Lint
+        run: npm run lint -w @hesoyam/contracts
+
+      - name: Compile
+        run: npm run compile -w @hesoyam/contracts
+
+      - name: Test
+        run: npm run test -w @hesoyam/contracts
+
+      - name: Coverage and floor
+        run: npm run coverage -w @hesoyam/contracts
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: solidity-coverage
+          path: packages/contracts/coverage/
+          retention-days: 14
+
+  web:
+    name: Web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # Not `npm ci`. The lockfile is generated on Windows and npm prunes the
+      # optional platform binaries for other systems, so a strict install would
+      # leave a Linux runner without the native swc build.
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      # The SDK generates into a gitignored directory, so on a clean checkout
+      # apps/web imports files that do not exist. Without this the typecheck and
+      # build below were resolving nothing and the gate was dead.
+      - name: Generate the SDK
+        run: npm run generate -w @hesoyam/sdk
+
+      - name: Typecheck
+        run: npx tsc --noEmit -p apps/web/tsconfig.json
+
+      - name: Build
+        run: npm run build -w @hesoyam/web
+
+  integration:
+    name: Deploy, seed and index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      # Not `npm ci`. The lockfile is generated on Windows and npm prunes the
+      # optional platform binaries for other systems, so a strict install would
+      # leave a Linux runner without the native swc build.
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Start a local chain
+        run: |
+          npm run node -w @hesoyam/contracts > /tmp/node.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -s -X POST -H 'Content-Type: application/json' \
+              --data '{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}' \
+              http://127.0.0.1:8545 > /dev/null; then
+              echo "Chain is up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Chain never came up"; cat /tmp/node.log; exit 1
+
+      - name: Deploy
+        run: npm run deploy:local -w @hesoyam/contracts
+
+      - name: Seed a full economic cycle
+        run: npm run seed -w @hesoyam/contracts
+
+      # Reads the whole flywheel back off the chain and asserts the anti-Ponzi
+      # invariants against live state. Exits non zero if any of them fail.
+      - name: Trace the flywheel
+        run: npm run flywheel -w @hesoyam/contracts
+
+      - name: Generate the SDK from the deployment
+        run: npm run generate -w @hesoyam/sdk
+
+      - name: Typecheck SDK and indexer
+        run: |
+          npm run typecheck -w @hesoyam/sdk
+          npm run typecheck -w @hesoyam/indexer
+
+      # Cold reindex from block zero, then assert the derived tables agree with the
+      # event mirror. Exits non zero on any inconsistency.
+      - name: Cold reindex and consistency checks
+        run: npm run verify -w @hesoyam/indexer
+
+  hygiene:
+    name: Hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No em dashes in source or docs
+        run: |
+          # Built at runtime so this file does not contain the character it bans.
+          EM=$(printf '\xe2\x80\x94')
+          if grep -rIn "$EM" \
+            --include='*.md' --include='*.sol' --include='*.ts' \
+            --include='*.tsx' --include='*.js' --include='*.css' --include='*.yml' \
+            --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=artifacts \
+            --exclude-dir=cache --exclude-dir=.next . ; then
+            echo "Em dash found. Use a comma, a colon or a full stop."
+            exit 1
+          fi
+          echo "Clean."
+
+      - name: No committed secrets
+        run: |
+          # Wider than a file named exactly .env, which is all this used to
+          # catch while .gitignore already covered far more than that.
+          if git ls-files | grep -E '(^|/)\.env($|\.)|\.key$|\.pem$|(^|/)keystore/' ; then
+            echo "Key material is committed. Remove it and rotate the key."
+            exit 1
+          fi
+          echo "Clean."

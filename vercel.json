@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run contracts:compile && npm run generate -w @hesoyam/sdk && npm run build -w @hesoyam/web",
+  "outputDirectory": "apps/web/.next",
+  "installCommand": "npm install --no-audit --no-fund",
+  "framework": "nextjs",
+  "github": {
+    "silent": true
+  }
+}

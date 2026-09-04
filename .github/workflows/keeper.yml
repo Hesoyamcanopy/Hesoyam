@@ -1,0 +1,62 @@
+# The beacon revealer, running as a scheduled job instead of a hosted service.
+#
+# Why this exists: a keeper that sleeps between reveals is a process somebody has
+# to pay to keep alive. This wakes, reveals one round, and exits, which fits in
+# the free tier of Actions on a public repository.
+#
+# What you give up is punctuality, not correctness. GitHub's scheduler is best
+# effort and routinely fires ten to thirty minutes late under load, and it skips
+# runs entirely when a repository is busy. The contract already tolerates that:
+# a grow bound to a future round simply waits for it, and a harvest against an
+# unrevealed round reverts rather than resolving wrongly. Nothing is lost,
+# harvests are just late.
+#
+# So this is a TESTNET arrangement, and a way to launch with no budget. On
+# mainnet a late reveal is a player facing outage, and the keeper belongs on a
+# machine that stays up. See docs/OPERATIONS.md.
+#
+# Secrets this needs, in Settings, Secrets and variables, Actions:
+#   KEEPER_RPC_URL         an RPC for the chain the beacon is on
+#   KEEPER_BEACON_ADDRESS  the deployed RandomBeacon
+#   KEEPER_KEY             a private key that owns nothing else
+#   KEEPER_SECRET          the same secret the committed head came from
+#   KEEPER_CHAIN_LENGTH    the same length the head came from
+name: keeper
+
+on:
+  schedule:
+    # Every five minutes, which is the shortest interval Actions accepts.
+    - cron: "*/5 * * * *"
+  # So a stalled beacon can be nudged by hand without waiting for the schedule.
+  workflow_dispatch:
+
+# A second run starting while the first is still mining would try to reveal the
+# same link and revert. One at a time, and never cancel one that is mid flight.
+concurrency:
+  group: keeper
+  cancel-in-progress: false
+
+jobs:
+  reveal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      # Only the keeper workspace is needed. It depends on viem and nothing else,
+      # so there is no contract compile and no SDK generation on this path.
+      - run: npm install --no-audit --no-fund
+
+      - name: Reveal one round
+        env:
+          RPC_URL: ${{ secrets.KEEPER_RPC_URL }}
+          BEACON_ADDRESS: ${{ secrets.KEEPER_BEACON_ADDRESS }}
+          KEEPER_KEY: ${{ secrets.KEEPER_KEY }}
+          KEEPER_SECRET: ${{ secrets.KEEPER_SECRET }}
+          CHAIN_LENGTH: ${{ secrets.KEEPER_CHAIN_LENGTH }}
+        run: npm run once -w @hesoyam/keeper

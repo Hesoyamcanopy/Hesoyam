@@ -1,0 +1,23 @@
+{
+  "network": "robinhoodTestnet",
+  "chainId": 46630,
+  "deployedAt": "2026-09-04T04:36:17.304Z",
+  "deployer": "0xe634535e10A012fFD3eB50E1E0beF9c0EAf0bCe8",
+  "startBlock": 112673655,
+  "addresses": {
+    "hesoyam": "0xAa0a9349f8f52a09Bc1ef2726bEc1c6A9fAbc655",
+    "settlement": "0x3a837C193a64e4E038444839DF398D28FD05D933",
+    "router": "0x12fA1dE1AB52ea43d0cE894F9bB211410f7bc9de",
+    "vault": "0x5ABa488c22f2B0F60Ec4ECE7d1E84679065553CE",
+    "flower": "0x6A53e3AD1FDb55a7a100164d881B1787772f5876",
+    "strainCard": "0xC1D70F9D49f727b0Ee500D336fF5D6A396D94da4",
+    "bench": "0x07De0A53d8945da95d7066c597aD365FBd2c9D4B",
+    "strains": "0x6ED4c82811E4bC29E91E0022A6bB500a1826724A",
+    "game": "0xAabF2AF7D4375421eBf07fcA1000A39F42CE9fF5",
+    "marketplace": "0xcc4f4e17203b86C7eD5bc01AD5bb644101C748B9",
+    "plot": "0x447d755BfF69c7Ce173A8c5d7fF4BB87FEeE302e",
+    "beacon": "0xDDbaA9826CDE42Ff390560669130c82366562e69",
+    "dispensary": "0x2b2CAc9ff2cCf535E7597F95AD43Ff3172689f64",
+    "crafter": "0x747e3955b724242bb6552F8BF75BBACB071eF015"
+  }
+}

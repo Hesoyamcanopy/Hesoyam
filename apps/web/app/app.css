@@ -1,0 +1,1512 @@
+/* Application shell.
+   Reuses the tokens from globals.css so the app and the marketing site are visibly
+   the same product. Nothing here redefines a colour. */
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(14, 17, 9, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+}
+
+.app-bar-actions {
+  margin-left: auto;
+}
+
+.app-nav {
+  display: none;
+  gap: 4px;
+}
+
+@media (min-width: 900px) {
+  .app-nav {
+    display: flex;
+  }
+}
+
+.app-nav-link {
+  padding: 7px 12px;
+  border-radius: 2px;
+  font-size: 14px;
+  color: var(--ink-2);
+  transition: color 0.16s ease, background 0.16s ease;
+}
+
+.app-nav-link:hover {
+  color: var(--ink);
+  background: var(--bg-2);
+}
+
+.app-nav-link.is-active {
+  color: var(--cash);
+  background: var(--bg-3);
+}
+
+.risk-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 12.5px;
+  color: #b8a473;
+  border-bottom: 1px solid var(--line);
+}
+
+.risk-tag {
+  flex: none;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--amber);
+  padding: 3px 7px;
+  border: 1px solid #4a3a12;
+  border-radius: 2px;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.page-head h1 {
+  font-size: 30px;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-head p {
+  margin: 8px 0 0;
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: 15px;
+}
+
+/* ---------- panels ---------- */
+
+.panel {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 22px;
+}
+
+.panel-quiet {
+  background: transparent;
+}
+
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.panel-head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.panel-sub {
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+.panel-note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-3);
+  max-width: 68ch;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 960px) {
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ---------- stats ---------- */
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (min-width: 760px) {
+  .stat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat-cell {
+  background: var(--bg-2);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-cell-k {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.stat-cell-v {
+  font-family: var(--f-mono);
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-cell-n {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.tone-cash {
+  color: var(--cash);
+}
+.tone-amber {
+  color: var(--amber);
+}
+
+/* ---------- rows ---------- */
+
+.kv-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.kv-row:last-of-type {
+  border-bottom: 0;
+}
+
+.kv-k {
+  font-size: 13.5px;
+  color: var(--ink-2);
+}
+
+.kv-v {
+  font-family: var(--f-mono);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- controls ---------- */
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  color: var(--ink);
+  font-family: var(--f-mono);
+  font-size: 14px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--cash);
+}
+
+.input-readonly {
+  display: flex;
+  align-items: center;
+  color: var(--ink-2);
+  background: var(--bg);
+}
+
+.input-inline {
+  width: 74px;
+  height: 32px;
+  font-size: 13px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.field-hint {
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.sell-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 760px) {
+  .sell-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.check input {
+  margin-top: 3px;
+  accent-color: var(--cash);
+}
+
+/* ---------- pills, warnings, empties ---------- */
+
+.pill {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--bg-3);
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.pill-cash {
+  background: rgba(95, 191, 74, 0.12);
+  color: var(--cash);
+}
+.pill-amber,
+.pill-warn {
+  background: rgba(224, 145, 58, 0.12);
+  color: var(--amber);
+}
+.pill-red {
+  background: rgba(224, 104, 92, 0.14);
+  color: var(--red);
+}
+
+.warning {
+  padding: 12px 14px;
+  background: rgba(224, 145, 58, 0.08);
+  border: 1px solid rgba(224, 145, 58, 0.3);
+  border-radius: 2px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #d8c39a;
+}
+
+.empty {
+  padding: 28px 20px;
+  text-align: center;
+  border: 1px dashed var(--line-2);
+  border-radius: 2px;
+}
+
+.empty-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.empty-body {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+/* ---------- transactions ---------- */
+
+.tx-note {
+  margin-top: 12px;
+  padding: 9px 12px;
+  border-radius: 2px;
+  background: var(--bg-3);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tx-note-ok {
+  background: rgba(95, 191, 74, 0.09);
+  color: var(--cash);
+}
+
+.tx-note-error {
+  background: rgba(224, 104, 92, 0.1);
+  color: #f0a49a;
+}
+
+.tx-note-quiet {
+  color: var(--ink-3);
+}
+
+.tx-dismiss {
+  margin-left: auto;
+  background: none;
+  border: 0;
+  color: inherit;
+  opacity: 0.7;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ---------- wallet ---------- */
+
+.wallet-chip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  padding: 0 12px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.wallet-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cash);
+}
+
+.wallet-balance {
+  color: var(--ink-3);
+  font-size: 12px;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 250px;
+  padding: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-title {
+  margin: 4px 8px 8px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.dropdown-item {
+  padding: 9px 10px;
+  background: none;
+  border: 0;
+  border-radius: 2px;
+  color: var(--ink);
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: var(--bg-3);
+}
+
+.dropdown-danger {
+  color: var(--red);
+}
+
+.dropdown-empty,
+.dropdown-note {
+  margin: 8px;
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+.dropdown-error {
+  margin: 8px;
+  font-size: 12px;
+  color: var(--red);
+}
+
+/* ---------- grow room ---------- */
+
+.bench-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 820px) {
+  .bench-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1180px) {
+  .bench-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.bench-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bench-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bench-card-id {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.bench-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bench-strain-name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.bench-empty {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--ink-3);
+}
+
+.bench-legend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-top: -2px;
+}
+
+.track-amber {
+  background: var(--amber);
+}
+
+.window-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.window-chip {
+  flex: 1;
+  min-width: 74px;
+  padding: 8px 6px;
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  color: var(--ink-3);
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.window-chip:disabled {
+  cursor: default;
+}
+
+.window-chip.is-open {
+  border-color: var(--cash);
+  color: var(--cash);
+  cursor: pointer;
+}
+
+.window-chip.is-done {
+  background: rgba(95, 191, 74, 0.1);
+  border-color: transparent;
+  color: var(--cash);
+}
+
+.window-chip.is-missed {
+  border-color: rgba(224, 104, 92, 0.4);
+  color: var(--red);
+  text-decoration: line-through;
+}
+
+.harvest-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.next-action {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.tranche-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.tranche {
+  padding: 16px;
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.tranche-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.tranche-tier {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tranche-price {
+  margin: 0;
+  font-size: 18px;
+}
+
+.tranche-left {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.quick-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* ---------- market ---------- */
+
+.listing-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-head,
+.listing-row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 0.7fr 1fr 0.9fr 1.4fr;
+  gap: 12px;
+  align-items: center;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+}
+
+.listing-head {
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.listing-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ---------- dispensary ---------- */
+
+.tier-prices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.tier-price {
+  padding: 14px;
+  background: var(--bg-3);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: flex-start;
+}
+
+.tier-price-v {
+  font-size: 19px;
+}
+
+.tier-price-n {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+/* ---------- staking ---------- */
+
+.tier-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tier-option {
+  padding: 14px;
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+/* Lock tiers are the armor rail, so they take the armor colour rather than the
+   cash colour that marks revenue elsewhere in the app. */
+.tier-option.is-active {
+  border-color: var(--armor);
+  background: rgba(195, 206, 212, 0.08);
+}
+
+.tier-option-name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.tier-option-lock {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.tier-option-mult {
+  font-size: 17px;
+  color: var(--armor);
+}
+
+.position-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.position-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.position-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.position-amount {
+  font-size: 14.5px;
+}
+
+.position-mult {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.position-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.position-penalty {
+  font-size: 11.5px;
+  color: var(--amber);
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.card-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-3);
+  border-radius: 2px;
+}
+
+/* ---------- invariants ---------- */
+
+.invariant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.invariant {
+  padding: 13px 14px;
+  background: var(--bg-3);
+  border-radius: 2px;
+}
+
+.invariant-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.invariant-id {
+  font-size: 11.5px;
+  color: var(--cash);
+}
+
+.invariant-claim {
+  margin: 0 0 5px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.invariant-numbers {
+  margin: 0;
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+/* ---------- curing ---------- */
+
+.curing-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.curing-row {
+  padding: 14px;
+  background: var(--bg-3);
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.curing-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+}
+
+/* ---------- armor ---------- */
+
+.pill-armor {
+  background: rgba(195, 206, 212, 0.12);
+  color: var(--armor);
+}
+
+.tone-armor {
+  color: var(--armor);
+}
+
+/* ---------- display numerals, app side ---------- */
+
+.stat-cell-v,
+.tranche-price,
+.tier-price-v,
+.tier-option-mult,
+.position-amount {
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-shadow: var(--hud-shadow);
+}
+
+.stat-cell-k,
+.field-label,
+.bench-card-id,
+.listing-head,
+.dropdown-title,
+.risk-tag,
+.pill {
+  font-family: var(--f-ui);
+  font-weight: 600;
+}
+
+/* Tones carry the HUD meaning through the app, not just the landing page. */
+.tone-cash {
+  color: var(--cash);
+}
+
+.tone-armor {
+  color: var(--armor);
+}
+
+.tone-gold {
+  color: var(--gold);
+}
+
+.pill-gold {
+  background: rgba(245, 197, 66, 0.14);
+  color: var(--gold);
+}
+
+.app-nav-link {
+  font-family: var(--f-ui);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.app-nav-link.is-active {
+  color: var(--gold);
+}
+
+.window-chip.is-open {
+  border-color: var(--health);
+  color: var(--health);
+}
+
+.window-chip.is-done {
+  background: rgba(154, 211, 74, 0.12);
+  color: var(--health);
+}
+
+.invariant-id {
+  color: var(--gold);
+}
+
+.wallet-dot {
+  background: var(--health);
+}
+
+/* ---------- transaction outcome ---------- */
+
+/* The conclusion card. Sits inline where the old status line was, so it does not
+   cover the controls the player is still using. */
+.tx-outcome {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.4);
+  border-left: 3px solid var(--line-2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.tx-outcome .tx-dismiss {
+  margin: 8px 0 0;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tx-outcome .sa-banner-sub a {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+/* ---------- spectator ---------- */
+
+.spectate-strip {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.spectate-strip > span:nth-child(2) {
+  flex: 1 1 320px;
+}
+
+.spectate-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.spectate-form .input {
+  width: 340px;
+  max-width: 46vw;
+  font-size: 12px;
+  padding: 7px 10px;
+}
+
+/* ---------- plots ---------- */
+
+.plot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.plot-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The art is 16 pixels wide. Let it scale up as hard squares rather than being
+   smoothed into mush by the browser's default filtering. */
+.plot-art svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.plot-art-empty {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: var(--bg-3);
+  font-family: var(--f-ui);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.plot-body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plot-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.plot-id {
+  font-family: var(--f-display);
+  font-size: 17px;
+  text-shadow: var(--hud-shadow);
+}
+
+.plot-meta {
+  display: flex;
+  gap: 10px;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.plot-site {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.plot-cost {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+/* The app shell gets the city, at a much lower strength than the landing page.
+   Dense data has to stay readable on top of it. */
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("/bg/city.svg") center top / cover no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* ---------- craft odds ---------- */
+
+.odds-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin: 16px 0 4px;
+}
+
+.odds-cell {
+  background: var(--bg-3);
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.odds-k {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.odds-v {
+  font-family: var(--f-mono);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.plot-owner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.plot-bench {
+  width: 96px;
+}
+
+/* ---------- the 3D grow room ---------- */
+
+.room-gate {
+  border: 1px solid var(--line-2);
+  background: rgba(0, 0, 0, 0.35);
+  padding: 34px;
+}
+
+.room-gate-inner {
+  max-width: 62ch;
+}
+
+.room-gate h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.room-gate p {
+  margin: 0 0 12px;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.room-gate-note {
+  color: var(--ink-3) !important;
+  font-size: 13px !important;
+}
+
+.room-wrap {
+  position: relative;
+  border: 1px solid var(--line-2);
+  background: #0e1109;
+  overflow: hidden;
+}
+
+.room-canvas {
+  height: min(70vh, 640px);
+  width: 100%;
+}
+
+.room-canvas canvas {
+  display: block;
+  cursor: crosshair;
+}
+
+.room-loading {
+  height: min(70vh, 640px);
+  display: grid;
+  place-items: center;
+  font-family: var(--f-ui);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.room-hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6), transparent);
+  pointer-events: none;
+}
+
+.room-status {
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border: 1px solid var(--line-2);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.room-status-live {
+  color: var(--health);
+  border-color: var(--health);
+}
+
+.room-status-off,
+.room-status-connecting {
+  color: var(--ink-3);
+}
+
+.room-keys {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  color: var(--ink-3);
+  margin-right: auto;
+}
+
+.room-exit {
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.room-exit:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* The walk-up prompt. Sits low so it never covers what you are looking at. */
+.room-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  min-width: 320px;
+  max-width: 92%;
+  padding: 14px 16px;
+  background: rgba(9, 12, 7, 0.92);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--gold);
+}
+
+.room-prompt-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.room-prompt-id {
+  font-family: var(--f-display);
+  font-size: 17px;
+  text-shadow: var(--hud-shadow);
+}
+
+.room-prompt-strain {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.room-prompt-meta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+
+.room-prompt-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.room-prompt-idle {
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.tone-red {
+  color: var(--red);
+}
+
+.room-prompt-key {
+  align-self: center;
+  font-family: var(--f-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+
+/* ---------- cheat codes ---------- */
+
+/* Sits over the canvas the way a title card does, and is never interactive, so
+   it does not steal the pointer lock back from the room. */
+.cheat-flash {
+  position: absolute;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cheat-flash .sa-banner-sub {
+  margin-top: 6px;
+  color: var(--ink-2);
+}
+
+.cheat-list {
+  position: absolute;
+  right: 14px;
+  top: 56px;
+  width: min(420px, calc(100% - 28px));
+  max-height: calc(100% - 80px);
+  overflow-y: auto;
+  background: rgba(8, 10, 5, 0.94);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--gold);
+  padding: 16px 18px;
+  z-index: 4;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.cheat-list-head,
+.cheat-list-foot {
+  color: var(--ink-3);
+  margin: 0 0 12px;
+}
+
+.cheat-list-foot {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.cheat-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cheat-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cheat-code {
+  font-size: 12.5px;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+
+.cheat-label {
+  text-align: right;
+  color: var(--ink);
+}
+
+.cheat-effect {
+  grid-column: 1 / -1;
+  color: var(--ink-3);
+  font-size: 12.5px;
+}
+
+
+/* The keystroke echo. Only ever visible while a real code is being typed, so it
+   is quiet during normal play rather than another thing on screen. */
+.cheat-typing {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 7px 12px;
+  background: rgba(8, 10, 5, 0.82);
+  border: 1px solid var(--line-2);
+  border-left: 3px solid var(--gold);
+  color: var(--gold);
+  font-size: 15px;
+  letter-spacing: 0.22em;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cheat-caret {
+  display: inline-block;
+  width: 9px;
+  height: 15px;
+  background: var(--gold);
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cheat-caret { animation: cheat-blink 1s steps(2, start) infinite; }
+}
+
+@keyframes cheat-blink {
+  to { opacity: 0.1; }
+}

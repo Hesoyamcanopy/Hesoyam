@@ -1,0 +1,45 @@
+{
+  "name": "hesoyam-canopy",
+  "private": true,
+  "version": "0.1.0",
+  "description": "HESOYAM CANOPY. On-chain cannabis growing, trading and staking.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "contracts:compile": "npm run compile -w @hesoyam/contracts",
+    "contracts:test": "npm run test -w @hesoyam/contracts",
+    "web:dev": "npm run dev -w @hesoyam/web",
+    "web:build": "npm run build -w @hesoyam/web",
+    "contracts:lint": "npm run lint -w @hesoyam/contracts",
+    "contracts:coverage": "npm run coverage -w @hesoyam/contracts",
+    "chain": "npm run node -w @hesoyam/contracts",
+    "deploy:local": "npm run deploy:local -w @hesoyam/contracts",
+    "seed": "npm run seed -w @hesoyam/contracts",
+    "sdk:generate": "npm run generate -w @hesoyam/sdk",
+    "indexer:dev": "npm run dev -w @hesoyam/indexer",
+    "indexer:verify": "npm run verify -w @hesoyam/indexer",
+    "typecheck": "npx tsc --noEmit -p apps/web/tsconfig.json && npm run typecheck -w @hesoyam/sdk && npm run typecheck -w @hesoyam/indexer",
+    "flywheel": "npm run flywheel -w @hesoyam/contracts",
+    "art": "npm run art -w @hesoyam/contracts",
+    "diagram": "node scripts/flywheel-diagram.cjs",
+    "wallet:new": "node scripts/new-wallet.cjs",
+    "wallet:check": "npm run wallet:check -w @hesoyam/contracts --",
+    "art:crew": "node scripts/crew-art-preview.cjs",
+    "art:plots": "node scripts/plot-art-preview.cjs",
+    "realtime": "npm run start -w @hesoyam/realtime",
+    "keeper": "npm run start -w @hesoyam/keeper",
+    "keeper:head": "npm run head -w @hesoyam/keeper",
+    "beacon:setup": "npm run beacon:setup -w @hesoyam/contracts --",
+    "web:start": "npm run start -w @hesoyam/web",
+    "whitepaper": "node scripts/whitepaper.cjs",
+    "smoke": "npm run smoke -w @hesoyam/contracts",
+    "demo": "npm run demo -w @hesoyam/contracts",
+    "warp": "npm run warp -w @hesoyam/contracts"
+  },
+  "license": "MIT",
+  "overrides": {
+    "@openzeppelin/contracts": "5.0.2"
+  }
+}

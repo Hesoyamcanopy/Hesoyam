@@ -1,0 +1,26 @@
+node_modules/
+.next/
+out/
+artifacts/
+cache/
+.env
+.env.local
+.DS_Store
+
+# Generated reports, regenerate with npm run contracts:coverage rather than commit.
+coverage/
+coverage.json
+
+# Written by the Vercel CLI when a directory is linked to a project. Per
+# machine, not per repo.
+.vercel/
+
+# Rendered from chain by scripts/plotart.js, regenerate rather than commit.
+packages/contracts/art/
+# Key material. Never commit any of these.
+.env.*
+!.env.example
+.env.wallet-backup
+*.key
+keystore/
+demo-salts.json

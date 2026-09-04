@@ -1,0 +1,1408 @@
+/* HESOYAM CANOPY design tokens.
+
+   Built to read like the HUD of an early 2000s West Coast open world game, which
+   is what the cheat code comes from. Three things drove the palette:
+
+   The ground is warm. Games of that era rendered a desert at dusk, so the black
+   here carries olive in it rather than being neutral, and the text is a warm bone
+   white rather than cold grey. That single decision is most of the period feel.
+
+   The accents are the HUD triad and they are not decoration. Health green tracks
+   plant condition, armor steel tracks the staking lock, cash green tracks money,
+   and gold is reserved for the star rating. A colour on this page tells you which
+   of those four things you are looking at.
+
+   Type is heavy and sheared, the way that era set its display text, with a hard
+   black shadow instead of a soft one. Body copy stays a normal grotesque, because
+   the display face is unreadable below a headline. */
+
+:root {
+  /* desert night, warm rather than neutral */
+  --bg: #0e1109;
+  --bg-2: #161a0f;
+  --bg-3: #1f2516;
+  --line: #2c3520;
+  --line-2: #414d2e;
+
+  /* bone white, the warm UI text of the period */
+  --ink: #f4f1e0;
+  --ink-2: #b9b89a;
+  --ink-3: #83866a;
+
+  /* the HUD triad, plus gold for the star rating */
+  --health: #9ad34a;
+  --armor: #c3ced4;
+  --cash: #5fbf4a;
+  --cash-hi: #7ad962;
+  --gold: #f5c542;
+  --amber: #e0913a;
+  --red: #c9453a;
+
+  /* the hard black drop shadow that era used on every HUD element */
+  --hud-shadow: 2px 2px 0 rgba(0, 0, 0, 0.85);
+
+  --max: 1200px;
+  --nav-h: 64px;
+
+  --f-display: Anton, "Arial Narrow", Impact, sans-serif;
+  --f-ui: Oswald, "Arial Narrow", system-ui, sans-serif;
+  --f-body: Archivo, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 24px);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display headings. Anton uppercase with a hard black shadow rather than a soft
+   one is most of the period feel on its own.
+
+   The shear is deliberately NOT applied here. Skewing a block element shears its
+   box as well as its glyphs, so a heading that wraps gets a slanted left edge and
+   falls off the grid. It is reserved for the wordmark and the banner, which are
+   both single lines. */
+h1,
+h2,
+h3 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  text-shadow: var(--hud-shadow);
+}
+
+/* Anton ships one weight. Without this the specific heading rules below ask for
+   700 and the browser synthesises a smeared fake bold. */
+.hero h1,
+.section-head h2,
+.step h3,
+.rail-card h3,
+.cta h2,
+.page-head h1,
+.panel-head h3,
+.bench-strain,
+.bench-strain-name,
+.empty-title {
+  font-weight: 400;
+}
+
+/* Sub headings sit in the UI face, not the display face. Anton at this size
+   shouts, and these are labels rather than titles. */
+h4,
+h5 {
+  font-family: var(--f-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* The shear, for single line display moments only. */
+.sa-shear {
+  display: inline-block;
+  transform: skewX(-8deg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--cash);
+  color: #0e1109;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cash);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- primitives ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+  text-shadow: var(--hud-shadow);
+}
+
+.eyebrow-quiet {
+  color: var(--ink-3);
+}
+
+.rule {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+.mono {
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Menu buttons of the period: squared off, uppercase, condensed, and lit rather
+   than tinted on hover. The 2px radius is the only softening. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  font-family: var(--f-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--cash);
+  color: #0b0f07;
+  border-color: #0b0f07;
+  box-shadow: var(--hud-shadow);
+}
+.btn-primary:hover {
+  background: var(--cash-hi);
+}
+
+.btn-ghost {
+  border-color: var(--line-2);
+  color: var(--ink);
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--bg-2);
+}
+
+.btn-sm {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 12.5px;
+}
+
+/* ---------- nav ---------- */
+
+.nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.nav[data-stuck="true"] {
+  background: rgba(14, 17, 9, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 6px;
+  /* Left to smooth on purpose. The source is 1042px going into 32, and
+     nearest neighbour at that ratio samples one pixel in thirty and returns
+     noise. Pixelated is for scaling pixel art up, not down. */
+}
+
+/* Two part wordmark, set the way that era set a title card: heavy condensed
+   display face, sheared, hard black shadow, with a letterspaced subtitle under
+   it. Both lines are single line, so the shear is safe here. */
+.brand-name {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.brand-name b {
+  font-family: var(--f-display);
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transform: skewX(-8deg);
+  transform-origin: left center;
+  text-shadow: var(--hud-shadow);
+}
+
+.brand-name i {
+  font-style: normal;
+  font-family: var(--f-ui);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transform: skewX(-8deg);
+  transform-origin: left center;
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 28px;
+  margin-right: auto;
+}
+
+.nav-links a {
+  font-size: 14px;
+  color: var(--ink-2);
+  transition: color 0.16s ease;
+}
+
+.nav-links a:hover {
+  color: var(--ink);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.nav-actions .quiet {
+  display: none;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.nav-actions .quiet:hover {
+  color: var(--ink);
+}
+
+@media (min-width: 900px) {
+  .nav-links {
+    display: flex;
+  }
+  .nav-actions {
+    margin-left: 0;
+  }
+  .nav-actions .quiet {
+    display: inline;
+  }
+}
+
+/* ---------- cover ---------- */
+
+/* The artwork already contains the wordmark, so it runs full bleed as a
+   masthead and the hero headline starts below it rather than on top of it. */
+.cover {
+  padding-top: var(--nav-h);
+  background: #0e1109;
+  border-bottom: 1px solid var(--line);
+  line-height: 0;
+}
+
+.cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  padding: calc(var(--nav-h) + 72px) 0 88px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* The cover already cleared the fixed nav, so the hero does not need to. */
+.cover + .hero {
+  padding-top: 64px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+@media (min-width: 1000px) {
+  .hero-grid {
+    grid-template-columns: 1.06fr 0.94fr;
+    gap: 64px;
+    align-items: center;
+  }
+}
+
+.hero h1 {
+  font-size: clamp(40px, 5.6vw, 66px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 20px 0 0;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--cash);
+}
+
+.hero p.lead {
+  margin: 22px 0 0;
+  max-width: 52ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin-top: 44px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (min-width: 620px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat {
+  background: var(--bg);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-v {
+  font-family: var(--f-mono);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-k {
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.35;
+}
+
+/* ---------- bench card ---------- */
+
+.bench {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bench-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bench-id {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.bench-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--cash);
+}
+
+.bench-live span {
+  width: 5px;
+  height: 5px;
+  background: var(--cash);
+  border-radius: 1px;
+}
+
+.bench-body {
+  padding: 20px;
+}
+
+.bench-strain {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 2px;
+}
+
+.bench-sub {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  margin: 0 0 20px;
+}
+
+.track {
+  height: 6px;
+  background: var(--bg-3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.track-fill {
+  height: 100%;
+  background: var(--cash);
+  border-radius: 2px;
+}
+
+.track-legend {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-top: 8px;
+}
+
+.bench-rows {
+  margin-top: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.bench-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.bench-row:last-child {
+  border-bottom: 0;
+}
+
+.bench-row .k {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.bench-row .v {
+  font-family: var(--f-mono);
+  font-size: 13.5px;
+  color: var(--ink);
+}
+
+.bench-row .v.hi {
+  color: var(--cash);
+}
+
+.bench-row .v.warn {
+  color: var(--amber);
+}
+
+.marks {
+  display: flex;
+  gap: 4px;
+}
+
+.mark {
+  width: 22px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--bg-3);
+}
+
+.mark.on {
+  background: var(--cash);
+}
+
+.bench-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--bg-3);
+  border-top: 1px solid var(--line);
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.bench-foot b {
+  color: var(--amber);
+  font-weight: 500;
+}
+
+/* ---------- generic section ---------- */
+
+.section {
+  padding: 88px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-head {
+  max-width: 620px;
+  margin-bottom: 48px;
+}
+
+.section-head h2 {
+  font-size: clamp(30px, 3.6vw, 42px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 16px 0 0;
+  text-wrap: balance;
+}
+
+.section-head p {
+  margin: 16px 0 0;
+  font-size: 16.5px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---------- steps ---------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (min-width: 860px) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.step {
+  background: var(--bg);
+  padding: 28px 26px 30px;
+}
+
+.step-n {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--cash);
+}
+
+.step h3 {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 14px 0 10px;
+}
+
+.step p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.step .figure {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-family: var(--f-mono);
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.step .figure b {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ---------- cycle ---------- */
+
+.cycle-figure {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--bg-2);
+  padding: 32px 24px 24px;
+  overflow-x: auto;
+}
+
+.cycle-figure svg {
+  display: block;
+  min-width: 660px;
+  width: 100%;
+  height: auto;
+}
+
+.cycle-notes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+@media (min-width: 760px) {
+  .cycle-notes {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+}
+
+.cycle-note h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.cycle-note p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---------- rails ---------- */
+
+.rails {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .rails {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rail-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 30px 28px;
+}
+
+.rail-share {
+  font-family: var(--f-mono);
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--cash);
+}
+
+.rail-card.amber .rail-share {
+  color: var(--amber);
+}
+
+/* Staking is the armor rail. It protects rather than earns, so it does not get
+   the cash colour that marks revenue everywhere else. */
+.rail-card.armor .rail-share {
+  color: var(--armor);
+}
+
+.rail-card.armor .rail-list .n {
+  color: var(--armor);
+}
+
+.rail-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 16px 0 10px;
+}
+
+.rail-card p {
+  margin: 0 0 20px;
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.rail-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.rail-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.rail-list li:last-child {
+  border-bottom: 0;
+}
+
+.rail-list .n {
+  font-family: var(--f-mono);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* ---------- honesty ---------- */
+
+.honesty {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+@media (min-width: 800px) {
+  .honesty {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.honest-item {
+  background: var(--bg);
+  padding: 24px 26px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+}
+
+.honest-item .x {
+  font-family: var(--f-mono);
+  font-size: 14px;
+  color: var(--red);
+  line-height: 1.5;
+}
+
+.honest-item h4 {
+  font-size: 15.5px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.honest-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ---------- faq ---------- */
+
+.faq {
+  border-top: 1px solid var(--line);
+  max-width: 820px;
+}
+
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 40px 22px 0;
+  position: relative;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  transition: color 0.16s ease;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary:hover {
+  color: var(--cash);
+}
+
+.faq summary::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  margin-top: -6px;
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.faq details[open] summary::after {
+  transform: rotate(-135deg);
+  border-color: var(--cash);
+}
+
+.faq .answer {
+  padding: 0 0 24px;
+  max-width: 68ch;
+  font-size: 15.5px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.faq .answer p {
+  margin: 0 0 12px;
+}
+
+.faq .answer p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- cta ---------- */
+
+.cta {
+  padding: 96px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cta-inner {
+  border: 1px solid var(--line-2);
+  border-radius: 2px;
+  background: var(--bg-2);
+  padding: 52px 44px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .cta-inner {
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+  }
+}
+
+.cta h2 {
+  font-size: clamp(28px, 3.4vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  margin: 14px 0 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.cta p {
+  margin: 14px 0 0;
+  max-width: 56ch;
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  padding: 72px 0 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 720px) {
+  .footer-grid {
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 32px;
+  }
+}
+
+.footer-brand p {
+  margin: 16px 0 0;
+  max-width: 34ch;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.footer-col h5 {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.footer-col a {
+  font-size: 14px;
+  color: var(--ink-2);
+  transition: color 0.16s ease;
+}
+
+.footer-col a:hover {
+  color: var(--ink);
+}
+
+.footer-bottom {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@media (min-width: 860px) {
+  .footer-bottom {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 48px;
+  }
+}
+
+.footer-legal {
+  max-width: 68ch;
+  font-size: 12.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.footer-meta {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+/* ---------- the HUD ---------- */
+
+/* The corner readout that era put over the world: money in the display face,
+   two meters under it, and a star rating alongside. Every value here is read
+   from a contract, so the HUD is instrumentation rather than set dressing. */
+
+.hud {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.hud-cash {
+  font-family: var(--f-display);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--cash);
+  text-shadow: var(--hud-shadow);
+  transform: skewX(-8deg);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.hud-cash-unit {
+  font-family: var(--f-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--ink-3);
+  margin-left: 8px;
+}
+
+.hud-meters {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.hud-meter {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.hud-meter-label {
+  font-family: var(--f-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  width: 50px;
+  flex: none;
+}
+
+/* Inset rather than raised. The period HUD sat the bar in a dark well. */
+.hud-track {
+  width: 136px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  box-shadow: var(--hud-shadow);
+  overflow: hidden;
+  flex: none;
+}
+
+.hud-fill {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.hud-fill-health {
+  background: var(--health);
+}
+
+.hud-fill-armor {
+  background: var(--armor);
+}
+
+.hud-meter-v {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.hud-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.hud-star {
+  width: 19px;
+  height: 19px;
+  display: block;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.85));
+}
+
+.hud-star-on {
+  color: var(--gold);
+}
+
+.hud-star-off {
+  color: rgba(0, 0, 0, 0.42);
+}
+
+/* ---------- banner ---------- */
+
+/* The full width status card that era threw up when something concluded. Used
+   for transaction outcomes, with our own wording rather than the game's. */
+.sa-banner {
+  display: inline-block;
+  font-family: var(--f-display);
+  font-size: clamp(20px, 3.4vw, 34px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  transform: skewX(-8deg);
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.85);
+}
+
+.sa-banner-good {
+  color: var(--gold);
+}
+
+.sa-banner-bad {
+  color: var(--red);
+}
+
+.sa-banner-sub {
+  margin-top: 8px;
+  font-family: var(--f-ui);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* ---------- hero right column ---------- */
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hud-panel {
+  padding: 20px 22px;
+}
+
+.hud-caption {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.5;
+}
+
+/* ---------- display numerals ---------- */
+
+/* The oversized readouts take the display face. Anton has no tabular figures, so
+   this is deliberately limited to standalone numbers. Anything in a column stays
+   in the mono face where the digits still line up. */
+.stat-v,
+.rail-share {
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  text-shadow: var(--hud-shadow);
+}
+
+.stat-k {
+  font-family: var(--f-ui);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Panels of that era were a dark translucent slab over the world, edged rather
+   than shadowed. */
+.panel,
+.bench,
+.rail-card,
+.cta-inner,
+.cycle-figure {
+  background: rgba(22, 26, 15, 0.92);
+  border-color: var(--line-2);
+}
+
+.step-n {
+  font-family: var(--f-display);
+  font-size: 15px;
+  color: var(--gold);
+  text-shadow: var(--hud-shadow);
+}
+
+.bench-live {
+  color: var(--health);
+}
+
+.bench-live span {
+  background: var(--health);
+}
+
+.bench-row .v.hi {
+  color: var(--health);
+}
+
+.mark.on {
+  background: var(--health);
+}
+
+.track-fill {
+  background: var(--health);
+}
+
+.faq summary {
+  font-family: var(--f-ui);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.faq summary:hover {
+  color: var(--gold);
+}
+
+.faq details[open] summary::after {
+  border-color: var(--gold);
+}
+
+.footer-col h5 {
+  color: var(--gold);
+}
+
+/* ---------- backdrops ---------- */
+
+/* Original artwork, generated by scripts/backgrounds.cjs. Deliberately quiet:
+   a backdrop that competes with the text in front of it is a worse backdrop,
+   however good it looks on its own. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url("/bg/desert.svg") center bottom / cover no-repeat;
+  opacity: 0.55;
+}
+
+/* Fades the artwork out under the copy so nothing has to fight it. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    var(--bg) 0%,
+    rgba(14, 17, 9, 0.86) 38%,
+    rgba(14, 17, 9, 0.35) 70%,
+    rgba(14, 17, 9, 0.6) 100%
+  );
+}
+
+.cta {
+  position: relative;
+  isolation: isolate;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url("/bg/city.svg") center / cover no-repeat;
+  opacity: 0.4;
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, var(--bg) 0%, rgba(14, 17, 9, 0.72) 45%, var(--bg) 100%);
+}
+
+@media (max-width: 700px) {
+  /* On a narrow screen the artwork is mostly cropped anyway, and the contrast
+     cost is real. Turn it down rather than shipping unreadable copy. */
+  .hero::before,
+  .cta::before {
+    opacity: 0.3;
+  }
+}

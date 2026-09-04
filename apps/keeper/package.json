@@ -1,0 +1,21 @@
+{
+  "name": "@hesoyam/keeper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "head": "tsx src/head.ts",
+    "typecheck": "tsc --noEmit",
+    "once": "tsx src/main.ts --once"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "@types/node": "^22.9.0"
+  }
+}
