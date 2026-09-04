@@ -27,3 +27,6 @@ packages/contracts/art/
 *.key
 keystore/
 demo-salts.json
+
+.vercel
+.env*
