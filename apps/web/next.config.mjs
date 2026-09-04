@@ -35,6 +35,23 @@ const cspHeader = process.env.CSP_ENFORCE === "1"
 const nextConfig = {
   reactStrictMode: true,
 
+  /**
+   * Vercel's newer "services" deploy model, which this project's vercel.json
+   * has to opt into to stop its own monorepo auto-detection from rejecting the
+   * build, routes every request through one top-level rewrite table. Next's own
+   * internal image optimizer at /_next/image does not get first-class treatment
+   * under that model the way it does outside it, and 404s in production even
+   * though the underlying static file serves fine.
+   *
+   * There are only ever a handful of small, fixed-size brand images here
+   * (the logo, the cover art), so the resizing and format conversion that
+   * optimizer buys is not worth chasing an edge case in a genuinely new and
+   * still-evolving part of Vercel's config surface. Serving them unoptimized
+   * is Next's own supported escape hatch for exactly this situation, and it
+   * sidesteps the interaction entirely rather than working around it.
+   */
+  images: { unoptimized: true },
+
   async headers() {
     return [
       {
