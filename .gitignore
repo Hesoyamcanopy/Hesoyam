@@ -15,6 +15,9 @@ coverage.json
 # machine, not per repo.
 .vercel/
 
+# tsc's incremental build cache, regenerated on every build.
+*.tsbuildinfo
+
 # Rendered from chain by scripts/plotart.js, regenerate rather than commit.
 packages/contracts/art/
 # Key material. Never commit any of these.
